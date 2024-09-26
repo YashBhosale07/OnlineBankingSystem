@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Details</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h2>User Details</h2>
+    <div>
+        <p><strong>First Name:</strong> <span th:text="${user.firstName}"></span></p>
+        <p><strong>Last Name:</strong> <span th:text="${user.lastName}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+        <p><strong>Account Type:</strong> <span th:text="${user.accountType}"></span></p>
+        <p><strong>Account Number:</strong> <span th:text="${accountNumber}"></span></p>
+    </div>
+    <div>
+        <a href="/User/login">Go to Login</a>
+    </div>
+</body>
+</html>
