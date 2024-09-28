@@ -10,5 +10,7 @@ import com.bank.model.User;
 
 @Repository
 public interface SavingAccountsDAO extends JpaRepository<SavingsAccount, Integer> {
-	Optional<SavingsAccount>findByUser(User user);
+	Optional<SavingsAccount> findByUser(User user);
+
+	Optional<SavingsAccount> findByAccountNumberAndUser_Password(Long accountNumber, String password);
 }

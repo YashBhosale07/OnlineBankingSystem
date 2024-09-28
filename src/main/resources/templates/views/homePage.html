@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Banking System</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap')
+	;
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Montserrat', sans-serif;
+}
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Features</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown link
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+	<div class="container-fluid mt-4">
+		<div class="row">
+			<!-- Main content area -->
+			<div class="col-md-8">
+				<!-- Loan Section -->
+				<section class="mb-4">
+					<h2>Loan</h2>
+					<p>Apply for various types of loans, including personal and
+						home loans.</p>
+					<button class="btn btn-primary">Apply for Loan</button>
+				</section>
+
+				<!-- Fund Transfer Section -->
+				<section class="mb-4">
+					<h2>Fund Transfer</h2>
+					<p>Transfer funds between your accounts or to other bank
+						accounts.</p>
+					<button class="btn btn-primary">Transfer Now</button>
+				</section>
+
+				<!-- Personal Information Section -->
+				<section class="mb-4">
+					<h2>Personal Information</h2>
+					<p>Update your personal details and account information.</p>
+					<button class="btn btn-primary">Update Info</button>
+				</section>
+
+				<!-- Transactions Section -->
+				<section class="mb-4">
+					<h2>Transactions</h2>
+					<p>View your recent transactions and download statements.</p>
+					<button class="btn btn-primary">View Transactions</button>
+				</section>
+
+				<!-- Credit/Debit Card Application Section -->
+				<section class="mb-4">
+					<h2>Credit/Debit Card Application</h2>
+					<p>Apply for a credit or debit card to manage your finances
+						easily.</p>
+					<button class="btn btn-primary">Apply for Card</button>
+				</section>
+
+				<!-- Life Insurance Section -->
+				<section class="mb-4">
+					<h2>Life Insurance</h2>
+					<p>Secure your future by applying for life insurance plans.</p>
+					<button class="btn btn-primary">Apply for Insurance</button>
+				</section>
+			</div>
+
+			<!-- Sidebar -->
+			<div class="col-md-4">
+				<!-- Rate of Interest Section -->
+				<section class="mb-4">
+					<h2>Rate of Interest</h2>
+					<ul class="list-group">
+						<li class="list-group-item">Home Loan: 6.5%</li>
+						<li class="list-group-item">Personal Loan: 7.8%</li>
+						<li class="list-group-item">Car Loan: 6.9%</li>
+						<li class="list-group-item">Education Loan: 5.5%</li>
+					</ul>
+				</section>
+
+				<!-- Calculator Section -->
+				<section class="mb-4">
+					<h2>Loan Calculator</h2>
+					<form>
+						<div class="mb-3">
+							<label for="amount" class="form-label">Loan Amount</label> <input
+								type="number" class="form-control" id="amount"
+								placeholder="Enter loan amount">
+						</div>
+						<div class="mb-3">
+							<label for="interest" class="form-label">Interest Rate
+								(%)</label> <input type="number" class="form-control" id="interest"
+								placeholder="Enter interest rate">
+						</div>
+						<div class="mb-3">
+							<label for="years" class="form-label">Years</label> <input
+								type="number" class="form-control" id="years"
+								placeholder="Enter loan duration in years">
+						</div>
+						<button type="button" class="btn btn-primary"
+							onclick="calculateEMI()">Calculate EMI</button>
+					</form>
+					<p class="mt-3">
+						Estimated Monthly EMI: <span id="emi-result">0</span>
+					</p>
+				</section>
+			</div>
+		</div>
+	</div>
+
+
+
+</body>
+</html>

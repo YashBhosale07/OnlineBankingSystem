@@ -20,7 +20,7 @@ public class SavingsAccount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Integer accountNumber;
+	private Long accountNumber;
 	@ManyToOne
 	private User user;
 }

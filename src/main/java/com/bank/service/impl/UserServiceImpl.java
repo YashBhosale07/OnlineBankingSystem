@@ -13,42 +13,42 @@ import com.bank.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
+
 	@Autowired
 	private UserDAO userDAO;
 
 	@Autowired
 	private CurrentAccountDAO currentAccountDAO;
-	
-	@Autowired 
+
+	@Autowired
 	private SavingAccountsDAO savingAccountsDAO;
-	
-	//method to check whether the userExist or not
+
+	// method to check whether the userExist or not
 	@Override
 	public boolean userExist(String email) {
-		if(userDAO.findByEmail(email).isPresent()) {
+		if (userDAO.findByEmail(email).isPresent()) {
 			return true;
 		}
 		return false;
 	}
-	
-	//method for account number generation
-	public int createAccountNumber() {
-		return (int)(Math.random()*1000);
+
+	// method for account number generation
+	public long createAccountNumber() {
+		return (long) (Math.random() * 9000000000L) + 1000000000L;
 	}
-	
+
 	@Override
-	public User saveUser(User user,String accountType) {
-		Integer accountNumber=createAccountNumber();
+	public User saveUser(User user, String accountType) {
+		Long accountNumber = createAccountNumber();
 		userDAO.save(user);
-		if(accountType.equalsIgnoreCase("savings")) {
-			SavingsAccount savingsAccount=new SavingsAccount();
+		if (accountType.equalsIgnoreCase("savings")) {
+			SavingsAccount savingsAccount = new SavingsAccount();
 			savingsAccount.setAccountNumber(accountNumber);
 			savingsAccount.setUser(user);
 			savingAccountsDAO.save(savingsAccount);
-			
-		}else if(accountType.equalsIgnoreCase("current")) {
-			CurrentAccount currentAccount=new CurrentAccount();
+
+		} else if (accountType.equalsIgnoreCase("current")) {
+			CurrentAccount currentAccount = new CurrentAccount();
 			currentAccount.setAccountNumber(accountNumber);
 			currentAccount.setUser(user);
 			currentAccountDAO.save(currentAccount);
@@ -57,13 +57,25 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public SavingsAccount findAccountNumberByUser(User user) {
-		SavingsAccount accounts=savingAccountsDAO.findByUser(user).get();
-		return accounts;
+	public SavingsAccount findSavingsAccountNumberByUser(User user) {
+		SavingsAccount account = savingAccountsDAO.findByUser(user).get();
+		return account;
 	}
 
-	
-	
-	
+	@Override
+	public CurrentAccount findCurrentAccountNumberByUser(User user) {
+		CurrentAccount account = currentAccountDAO.findByUser(user).get();
+		return account;
+	}
+
+	@Override
+	public Boolean validateUser(Long accountNumber, String password) {
+		if(savingAccountsDAO.findByAccountNumberAndUser_Password(accountNumber, password).isPresent()) {
+			return true;
+		}else if(currentAccountDAO.findByAccountNumberAndUser_Password(accountNumber, password).isPresent()) {
+			return true;
+		}
+		return false;
+	}
 
 }

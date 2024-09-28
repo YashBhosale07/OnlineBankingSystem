@@ -27,4 +27,5 @@ public class User {
 	@Email
 	private String email;
 	private String accountType;
+	private String password;
 }
