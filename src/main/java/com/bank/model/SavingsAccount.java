@@ -21,6 +21,7 @@ public class SavingsAccount {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Long accountNumber;
+	private Double fund;
 	@ManyToOne
 	private User user;
 }
