@@ -19,7 +19,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	@Size(min=1,max=50)
 	private String firstName;
 	@Size(min=1,max=50)

@@ -18,7 +18,7 @@ public interface UserService {
 	Optional<SavingsAccount> findSavingsAccountByAccountNumber(Long accountNumber);
 	Optional<CurrentAccount> findCurrentAccountByAccountNumber(Long accountNumber);
 	boolean savedLoanDetails(Loan l);
-	Long findFundByAccountNumber(Long accountNumber);
+	Double findFundByAccountNumber(Long accountNumber);
 	FundTransfer saveHistory(FundTransfer funds);
 	int UpdateFund(Long accountNumber,Double fund);
 	

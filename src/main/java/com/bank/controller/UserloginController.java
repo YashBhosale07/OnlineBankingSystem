@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bank.model.CurrentAccount;
+import com.bank.model.FundTransfer;
 import com.bank.model.Loan;
 import com.bank.model.SavingsAccount;
 import com.bank.service.UserService;
 
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -85,20 +87,31 @@ public class UserloginController {
 	public String transferFund() {
 		return "fundTransfer";
 	}
+	@Transactional
 	@PostMapping("/fundTransfer")
 	public String transferFundAmount(@RequestParam Long fromAccount,@RequestParam Long toAccount,
 	@RequestParam Double amountTransfer) {
+		FundTransfer f=new FundTransfer();
+		f.setAmountTransfer(amountTransfer);
+		f.setFromAccount(fromAccount);
+		f.setToAccount(toAccount);
 		if(service.findSavingsAccountByAccountNumber(toAccount).isPresent()) {
-			Long fund=service.findFundByAccountNumber(fromAccount);
-			if(fund>=amountTransfer) {
-				Double fundAfterTransfering=fund-amountTransfer;
-				service.UpdateFund(toAccount, fundAfterTransfering);
+			Double senderFund=service.findFundByAccountNumber(fromAccount);
+			Double reciverFund=service.findFundByAccountNumber(toAccount);
+			if(senderFund>=amountTransfer) {
+				Double fundSender=senderFund-amountTransfer;
+				Double fundReciver=reciverFund+amountTransfer;
+				service.UpdateFund(fromAccount, fundSender);
+				service.UpdateFund(toAccount, fundReciver);
 			}
 		}else if(service.findCurrentAccountByAccountNumber(toAccount).isPresent()) {
-			Long fund=service.findFundByAccountNumber(fromAccount);
-			if(fund>=amountTransfer) {
-				Double fundAfterTransfering=fund-amountTransfer;
-				service.UpdateFund(toAccount, fundAfterTransfering);
+			Double senderFund=service.findFundByAccountNumber(fromAccount);
+			Double reciverFund=service.findFundByAccountNumber(toAccount);
+			if(senderFund>=amountTransfer) {
+				Double fundSender=senderFund-amountTransfer;
+				Double fundReciver=reciverFund+amountTransfer;
+				service.UpdateFund(fromAccount, fundSender);
+				service.UpdateFund(toAccount, fundReciver);
 			}
 		}
 		return "home";

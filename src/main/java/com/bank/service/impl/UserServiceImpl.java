@@ -92,19 +92,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Optional<SavingsAccount> findSavingsAccountByAccountNumber(Long accountNumber) {
-		if(savingAccountsDAO.findByAccountNumber(accountNumber).isPresent()) {
-			return savingAccountsDAO.findByAccountNumber(accountNumber);
-		}
-		return null;
+	    // Directly return the result from the DAO, which should already be an Optional
+	    return savingAccountsDAO.findByAccountNumber(accountNumber);  // This returns Optional<SavingsAccount>
 	}
 
 	@Override
 	public Optional<CurrentAccount> findCurrentAccountByAccountNumber(Long accountNumber) {
-		if(currentAccountDAO.findByAccountNumber(accountNumber).isPresent()) {
-			return currentAccountDAO.findByAccountNumber(accountNumber);
-		}
-		return null;
+	    // Directly return the result from the DAO, which should already be an Optional
+	    return currentAccountDAO.findByAccountNumber(accountNumber);  // This returns Optional<CurrentAccount>
 	}
+
 
 	@Override
 	public boolean savedLoanDetails(Loan l) {
@@ -118,12 +115,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Long findFundByAccountNumber(Long accountNumber) {
-		if(savingAccountsDAO.findByAccountNumber(accountNumber).isPresent()) {
-			return savingAccountsDAO.findFundByAccountNumber(accountNumber);
-		}
-		return currentAccountDAO.findFundByAccountNumber(accountNumber);
+	public Double findFundByAccountNumber(Long accountNumber) {
+	    // Check for the fund in the savings account first
+	    Double fund = savingAccountsDAO.findFundByAccountNumber(accountNumber);
+	    
+	    // If fund is not found or null, check the current account
+	    if (fund == null || fund <= 0) {
+	        fund = currentAccountDAO.findFundByAccountNumber(accountNumber);
+	    }
+	    
+	    // Return the fund amount (could still be null if not found in both accounts)
+	    return fund;
 	}
+
 
 	@Override
 	public int UpdateFund(Long accountNumber, Double fund) {

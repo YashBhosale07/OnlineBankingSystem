@@ -11,12 +11,13 @@ import com.bank.model.CurrentAccount;
 import com.bank.model.User;
 
 @Repository
-public interface CurrentAccountDAO extends JpaRepository<CurrentAccount, Integer> {
+public interface CurrentAccountDAO extends JpaRepository<CurrentAccount, Long> {
 	Optional<CurrentAccount> findByUser(User user);
 
 	Optional<CurrentAccount> findByAccountNumberAndUser_Password(Long accountNumber, String password);
 	Optional<CurrentAccount> findByAccountNumber(Long accountNumber);
-	Long findFundByAccountNumber(Long accountNumber);
+	@Query("SELECT a.fund FROM CurrentAccount a WHERE a.accountNumber = :accountNumber")
+    Double findFundByAccountNumber(Long accountNumber);
 
     @Modifying
     @Query("UPDATE CurrentAccount a SET a.fund = :fund WHERE a.accountNumber = :accountNumber")
