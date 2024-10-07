@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bank.model.CurrentAccount;
 import com.bank.model.FundTransfer;
@@ -87,33 +88,45 @@ public class UserloginController {
 	public String transferFund() {
 		return "fundTransfer";
 	}
-	@Transactional
-	@PostMapping("/fundTransfer")
-	public String transferFundAmount(@RequestParam Long fromAccount,@RequestParam Long toAccount,
-	@RequestParam Double amountTransfer) {
-		FundTransfer f=new FundTransfer();
-		f.setAmountTransfer(amountTransfer);
-		f.setFromAccount(fromAccount);
-		f.setToAccount(toAccount);
-		if(service.findSavingsAccountByAccountNumber(toAccount).isPresent()) {
-			Double senderFund=service.findFundByAccountNumber(fromAccount);
-			Double reciverFund=service.findFundByAccountNumber(toAccount);
-			if(senderFund>=amountTransfer) {
-				Double fundSender=senderFund-amountTransfer;
-				Double fundReciver=reciverFund+amountTransfer;
-				service.UpdateFund(fromAccount, fundSender);
-				service.UpdateFund(toAccount, fundReciver);
-			}
-		}else if(service.findCurrentAccountByAccountNumber(toAccount).isPresent()) {
-			Double senderFund=service.findFundByAccountNumber(fromAccount);
-			Double reciverFund=service.findFundByAccountNumber(toAccount);
-			if(senderFund>=amountTransfer) {
-				Double fundSender=senderFund-amountTransfer;
-				Double fundReciver=reciverFund+amountTransfer;
-				service.UpdateFund(fromAccount, fundSender);
-				service.UpdateFund(toAccount, fundReciver);
-			}
-		}
-		return "home";
-	}
+
+@Transactional
+@PostMapping("/fundTransfer")
+public String transferFundAmount(@RequestParam Long toAccount,
+                                  @RequestParam Double amountTransfer
+                                  ) {
+    FundTransfer f = new FundTransfer();
+    f.setAmountTransfer(amountTransfer);
+    f.setFromAccount(accountNumberVara);
+    f.setToAccount(toAccount);
+    service.saveHistory(f);
+    
+    if (service.findSavingsAccountByAccountNumber(toAccount).isPresent()) {
+        Double senderFund = service.findFundByAccountNumber(accountNumberVara);
+        Double receiverFund = service.findFundByAccountNumber(toAccount);
+        if (senderFund >= amountTransfer) {
+            Double fundSender = senderFund - amountTransfer;
+            Double fundReceiver = receiverFund + amountTransfer;
+            service.UpdateFund(accountNumberVara, fundSender);
+            service.UpdateFund(toAccount, fundReceiver);
+            
+        }
+    } else if (service.findCurrentAccountByAccountNumber(toAccount).isPresent()) {
+        Double senderFund = service.findFundByAccountNumber(accountNumberVara);
+        Double receiverFund = service.findFundByAccountNumber(toAccount);
+        if (senderFund >= amountTransfer) {
+            Double fundSender = senderFund - amountTransfer;
+            Double fundReceiver = receiverFund + amountTransfer;
+            service.UpdateFund(accountNumberVara, fundSender);
+            service.UpdateFund(toAccount, fundReceiver);
+        }
+    }
+    
+    return "homePage";
+ }
+
+@GetMapping("/historyPage")
+public String viewTranscations() {
+	
+	return "historyPage";
+}
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fund Transfer History</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- Adjust path as necessary -->
+</head>
+<body>
+    <h1>Fund Transfer History</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>From Account</th>
+                <th>To Account</th>
+                <th>Amount Transferred</th>
+                <th>Transfer Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="transfer : ${fundTransfers}">
+                <td th:text="${transfer.id}"></td>
+                <td th:text="${transfer.fromAccount}"></td>
+                <td th:text="${transfer.toAccount}"></td>
+                <td th:text="${transfer.amountTransfer}"></td>
+                <td th:text="${transfer.time}"></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(fundTransfers)}">
+                <td colspan="5">No fund transfer history available.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/User/homePage">Back to Home</a>
+</body>
+</html>
