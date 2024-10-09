@@ -1,5 +1,6 @@
 package com.bank.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bank.model.CurrentAccount;
 import com.bank.model.FundTransfer;
@@ -31,6 +31,11 @@ public class UserloginController {
 	
 	@Autowired
 	UserService service;
+	
+	@GetMapping("/homePage")
+	public String homePage() {
+		return "homePage";
+	}
 	
 	@GetMapping("/login")
 	public String alreadyUser() {
@@ -125,8 +130,9 @@ public String transferFundAmount(@RequestParam Long toAccount,
  }
 
 @GetMapping("/historyPage")
-public String viewTranscations() {
-	
+public String viewTranscations(Map<String,Object>map) {
+	List<FundTransfer>list=service.findByFromAccount(accountNumberVara);
+	map.put("fundTransfers", list);
 	return "historyPage";
 }
 }

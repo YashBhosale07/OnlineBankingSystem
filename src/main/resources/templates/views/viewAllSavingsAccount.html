@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Savings Account</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- Adjust path as necessary -->
+</head>
+<body>
+    <h1>Savings Account</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Account Number</th>
+                <th>Fund</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="savings : ${savingsAccount}">
+                <td th:text="${savings.id}"></td>
+                <td th:text="${savings.accountNumber}"></td>
+                <td th:text="${savings.fund}"></td>
+                
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/Staff/StaffHomePage">Back to Home</a>
+</body>
+</html>

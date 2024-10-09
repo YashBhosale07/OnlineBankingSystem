@@ -1,5 +1,6 @@
 package com.bank.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.bank.model.CurrentAccount;
@@ -21,5 +22,7 @@ public interface UserService {
 	Double findFundByAccountNumber(Long accountNumber);
 	FundTransfer saveHistory(FundTransfer funds);
 	int UpdateFund(Long accountNumber,Double fund);
+	List<FundTransfer>findByFromAccount(Long fromAccount);
+	
 	
 }

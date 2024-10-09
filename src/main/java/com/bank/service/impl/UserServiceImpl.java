@@ -1,5 +1,6 @@
 package com.bank.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,6 +137,11 @@ public class UserServiceImpl implements UserService {
 			 
 		}
 		return currentAccountDAO.updateFund(accountNumber, fund);
+	}
+
+	@Override
+	public List<FundTransfer> findByFromAccount(Long fromAccount) {
+		return fundTransferDAO.findByFromAccount(fromAccount) ;
 	}
 
 }
